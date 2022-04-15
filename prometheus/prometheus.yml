@@ -1,0 +1,7 @@
+scrape_configs:
+- job_name: prometheus_test_wxw
+  scrape_interval: 5s
+  static_configs:
+  - targets:
+    - prometheus_test1:2112
+    - prometheus_test2:2112
