@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: autoscaler-test
   name: autoscaler-test
@@ -13,13 +12,14 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: autoscaler-test
     spec:
       containers:
-      - image: wxwmatt/autoscaler_test:1.0
-        name: autoscaler-test-lx9bw
+      - image: wxwmatt/autoscaler-test:1.0
+        name: autoscaler-test
+        ports:
+          - containerPort: 1323
         resources:
           requests:
             memory: "16Mi"

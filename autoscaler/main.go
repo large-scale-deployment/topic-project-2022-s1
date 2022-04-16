@@ -46,6 +46,16 @@ func memoryUsage() *ResMemoryOperation {
 var _memoryAllocated []byte = nil
 
 // Handler
+func hello(c echo.Context) (err error) {
+	return c.String(http.StatusCreated, "I am here")
+}
+
+// Handler
+func ping(c echo.Context) (err error) {
+	return c.String(http.StatusCreated, "Pong")
+}
+
+// Handler
 func allocMemory(c echo.Context) (err error) {
 	mp := new(ReqMemoryOperation)
 	if err = c.Bind(mp); err != nil {
@@ -72,6 +82,8 @@ func startService() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	// Routes
+	e.GET("/", hello)
+	e.GET("/ping", ping)
 	e.GET("/alloc_memory", allocMemory)
 	e.GET("/dealloc_memory", deallocMemory)
 
