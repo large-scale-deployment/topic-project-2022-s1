@@ -1,0 +1,49 @@
+version: '3.5'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.34.0
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - test
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - prometheus_test1
+      - prometheus_test2
+
+  grafana:
+    image: grafana/grafana:8.4.6
+    container_name: grafana
+    ports:
+      - 3000:3000
+    networks:
+      - test
+    depends_on:
+      - prometheus
+
+  prometheus_test1:
+    build: .
+    ports:
+      - "12112:2112"
+    networks:
+      - test
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+  prometheus_test2:
+    build: .
+    ports:
+      - "22112:2112"
+    networks:
+      - test
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+networks:
+  test:
+    driver: bridge

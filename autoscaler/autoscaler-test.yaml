@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: autoscaler-test
+  name: autoscaler-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: autoscaler-test
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: autoscaler-test
+    spec:
+      containers:
+      - image: wxwmatt/autoscaler_test:1.0
+        name: autoscaler-test-lx9bw
+        resources:
+          requests:
+            memory: "16Mi"
+            cpu: "250m"
+          limits:
+            memory: "32Mi"
+            cpu: "500m"
