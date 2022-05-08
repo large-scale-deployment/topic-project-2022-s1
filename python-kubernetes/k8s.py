@@ -76,6 +76,7 @@ class K8SStats:
     start_times = []
     for ps in pods_status:
       name = ps["name"]
+      image_size = ps['container_statuses']["image_size"] 
       conditions = ps['conditions']
       t1 = conditions['PodScheduled']['last_transition_time']
       t2 = conditions['Initialized']['last_transition_time']
@@ -94,6 +95,7 @@ class K8SStats:
       t2 = conditions['Ready']['last_transition_time']
       p_r = diff_datetime(t1, t2)
       start_times.append(dict(
+        image_size = int(image_size / 1024 / 1024),
         name = name, p_c = p_c, i_c = i_c, c_r = c_r, p_r = p_r,
         pod_scheduled = conditions['PodScheduled']['last_transition_time'],
         initialized = conditions['Initialized']['last_transition_time'],
@@ -107,6 +109,7 @@ if __name__ == "__main__":
   stats = K8SStats()
   stats.collect_image_size()
   print(stats.get_image_sizes())
-  sorted = sorted(stats.collect_pods_start_time(), key= lambda x: x['ready'])
-  print(json.dumps(stats.collect_pods_start_time()))
+  namespace = 'java'
+  sorted = sorted(stats.collect_pods_start_time(namespace), key= lambda x: x['ready'])
+  print(json.dumps(stats.collect_pods_start_time(namespace)))
   print(json.dumps(sorted))
