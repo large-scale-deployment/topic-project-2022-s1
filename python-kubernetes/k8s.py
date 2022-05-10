@@ -109,7 +109,7 @@ if __name__ == "__main__":
   stats = K8SStats()
   stats.collect_image_size()
   print(stats.get_image_sizes())
-  namespace = 'java'
+  namespace = 'go'
   sorted = sorted(stats.collect_pods_start_time(namespace), key= lambda x: x['ready'])
   print(json.dumps(stats.collect_pods_start_time(namespace)))
   print(json.dumps(sorted))
