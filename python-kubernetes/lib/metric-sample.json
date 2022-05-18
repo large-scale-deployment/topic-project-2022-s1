@@ -1,0 +1,30 @@
+{
+  "metadata": {
+      "name": "counter",
+      "namespace": "default",
+      "creationTimestamp": "2022-05-18T12:13:27Z",
+      "labels": {
+          "security.istio.io/tlsMode": "istio",
+          "service.istio.io/canonical-name": "counter",
+          "service.istio.io/canonical-revision": "latest"
+      }
+  },
+  "timestamp": "2022-05-18T12:13:07Z",
+  "window": "15.506s",
+  "containers": [
+      {
+          "name": "count",
+          "usage": {
+              "cpu": "930427n",
+              "memory": "1532Ki"
+          }
+      },
+      {
+          "name": "istio-proxy",
+          "usage": {
+              "cpu": "2592444n",
+              "memory": "32760Ki"
+          }
+      }
+  ]
+}
