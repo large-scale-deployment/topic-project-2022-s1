@@ -1,11 +1,13 @@
 from kubernetes import client
+import utils
 def get_pods_by_deployment(deployment):
     # name like `details`
     dname = deployment.metadata.name
     namespace = deployment.metadata.namespace
     # apiCoreV1.list_namespaced_pod(namespace='default', label_selector=f'app=details')
     apiCoreV1 = client.CoreV1Api()
-    return apiCoreV1.list_namespaced_pod(namespace=namespace, label_selector=f'app={dname}')
+    label_selector = utils.construct_label_selectors(deployment)
+    return apiCoreV1.list_namespaced_pod(namespace=namespace, label_selector=label_selector)
 
 if __name__ == "__main__":
     import k8s_deployments

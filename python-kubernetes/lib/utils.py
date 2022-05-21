@@ -1,5 +1,11 @@
 import six
 import datetime
+
+
+def construct_label_selectors(deployment):
+    labels = [ f'{k}={v}' for k, v in deployment.spec.template.metadata.labels.items()]
+    return ','.join(labels)
+
 def sanitize_for_serialization(obj):
     """Builds a JSON POST object.
 
