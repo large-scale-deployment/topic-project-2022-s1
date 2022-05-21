@@ -1,10 +1,11 @@
 import json
 from kubernetes import client
 from kubernetes.utils import quantity
+from humanfriendly import format_size
 from numpy import NaN
-import utils
 
-import k8s_deployments, k8s_pods
+# my libs
+from lib import utils, k8s_deployments, k8s_pods
 
 class DeploymentResourceStatsEncoder(json.JSONEncoder):
 
@@ -92,29 +93,9 @@ class DeploymentResourceStats(object):
     def __str__(self):
         return self.__repr__()
 
-def list_namespaced_pod_resource_usage(namespace):
-    apiCoreV1 = client.CoreV1Api()
-    apiCustObject = client.CustomObjectsApi()
-
-    metric_params = dict(group="metrics.k8s.io",version="v1beta1", namespace=namespace, plural="pods")
-    resource = apiCustObject.list_namespaced_custom_object(**metric_params)
-
-    usages = {}
-    for pod in resource['items']:
-      pod_name = pod['metadata']['name']
-      if 'app' not in pod['metadata']['labels'] and 'run' not in pod['metadata']['labels']:
-        continue
-      app_name = pod['metadata']['labels'].get('app', pod['metadata']['labels'].get('run'))
-
-      target_pod = apiCoreV1.read_namespaced_pod(pod_name, namespace='default')
-      container_limits = target_pod.spec.containers
-      container_usages = pod['containers']
-      stats = usages.get(app_name, DeploymentResourceStats(app_name))
-      stats.add_metric_from_containers(pod_name, container_limits, container_usages)
-      usages[app_name] = stats
-    return usages
-
 def get_resource_usage_object_by_pod(pod_name, namespace):
+    # kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes"
+    # https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/
     apiCustObject = client.CustomObjectsApi()
     cust_params = dict(
         group="metrics.k8s.io",version="v1beta1",
@@ -204,9 +185,6 @@ def get_container_usage(containers):
 
 
 if __name__ == '__main__':
-
-    from humanfriendly import format_size
-    import json
     from kubernetes import config
     config.load_kube_config()
 

@@ -1,8 +1,7 @@
 from kubernetes import client
-import utils
+from lib import utils
 def get_pods_by_deployment(deployment):
     # name like `details`
-    dname = deployment.metadata.name
     namespace = deployment.metadata.namespace
     # apiCoreV1.list_namespaced_pod(namespace='default', label_selector=f'app=details')
     apiCoreV1 = client.CoreV1Api()
