@@ -181,14 +181,3 @@ def get_container_usage(containers):
             else:
                 memory += 0
     return dict(cpu = cpu, memory = memory)
-
-
-
-if __name__ == '__main__':
-    from kubernetes import config
-    config.load_kube_config()
-
-    #deployment = k8s_deployments.get_deployment_by_name('php-apache')
-    for d in k8s_deployments.get_namespaced_deployments('default').items:
-        print(get_resource_usage_by_deployment(d))
-
