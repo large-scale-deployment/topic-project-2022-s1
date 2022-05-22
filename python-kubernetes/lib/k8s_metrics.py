@@ -84,9 +84,9 @@ class DeploymentResourceStats(object):
             return round(self.memory_usage(True)/self.memory_limit(True), 2)
 
     def __repr__(self):
-        tmp = f'app: {self._app_name}, cpu_rate: {self.cpu_rate()}, memory_rate: {self.memory_rate()}, cpu_usage: {self.cpu_usage()}, memory_usage: {self.memory_usage()}, cpu_limit: {self.cpu_limit()}, memory_limit: {self.memory_limit()}'
+        tmp = f'app: {self._app_name}, cpu/memory rate: {self.cpu_rate()}/{self.memory_rate()}, cpu/memory usage: {round(self.cpu_usage(), 2)}/{self.memory_usage()}, cpu/memory limit: {self.cpu_limit()}/{self.memory_limit()}'
         for pod in self._metrics:
-            tmp += '\n  ' + f"{pod['name']}, cpu: {format_size(pod['cpu_usage'], binary=True)}, memory: {format_size(pod['memory_usage'], binary=True)}"
+            tmp += '\n  ' + f"{pod['name']}, cpu: {round(pod['cpu_usage'], 2)}, memory: {format_size(pod['memory_usage'], binary=True)}"
         return tmp
 
 
