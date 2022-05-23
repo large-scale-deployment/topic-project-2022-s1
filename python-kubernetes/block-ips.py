@@ -1,5 +1,5 @@
 from elasticsearch import Elasticsearch
-from k8s_block_ips import block_ips
+from lib.k8s_istio import block_ips
 from kubernetes import client, config
 
 config.load_kube_config()
@@ -37,4 +37,4 @@ for ips, count in ips.items():
   print(f"{ips}: {count}")
   if count >= 3:
       ip_list = ips.split(',')
-      block_ips(ip_list)
+      block_ips('ingress-policy', ip_list)
