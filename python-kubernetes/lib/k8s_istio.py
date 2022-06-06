@@ -6,7 +6,7 @@ def get_authorizationpolicy(name, namespace='istio-system'):
         group ='security.istio.io',
         version = 'v1beta1',
         namespace = namespace,
-        plural='authorizationpolicy',
+        plural='authorizationpolicies',
         name = name
     )
     policy = apiCustObject.get_namespaced_custom_object(**params)
@@ -21,7 +21,7 @@ def patch_authorizationpolicy(policy):
         group ='security.istio.io',
         version = 'v1beta1',
         namespace = namespace,
-        plural='authorizationpolicy',
+        plural='authorizationpolicies',
         name = name
     )
 

@@ -1,0 +1,54 @@
+version: 0.1
+apps:
+  - name: crm
+    deployments:
+      - name: sso-service
+        threshold: 0.8
+        actions:
+          - name: scale-in
+            weight: 10
+            type: DayOfWeek
+            replicas:
+              min: 5
+              max: 15
+            values:
+              - Friday
+              - Saturday
+          - name: scale-in
+            weight: 5
+            type: Dynamic
+            replicas:
+              min: 2
+              max: 5
+          - name: scale-out
+            weight: 5
+            type: Dynamic
+            replicas:
+              min: 2
+      - name: message-agent
+        threshold: 0.8
+        actions:
+          - name: scale-in
+            weight: 10
+            type: DayOfWeek
+            replicas:
+              min: 3
+              max: 5
+            values:
+              - Friday
+              - Saturday
+          - name: scale-in
+            weight: 5
+            type: Dynamic
+            replicas:
+              min: 2
+              max: 5
+          - name: scale-out
+            weight: 5
+            type: Dynamic
+            replicas:
+              min: 2
+
+
+
+

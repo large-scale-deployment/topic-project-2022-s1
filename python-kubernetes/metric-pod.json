@@ -1,0 +1,17 @@
+{
+  "window": "15.838s",
+  "containers": [
+    {
+      "name": "count",
+      "usage": { "cpu": "711170n", "memory": "1256Ki" }
+    },
+    {
+      "name": "istio-proxy",
+      "usage": { "cpu": "1586363n", "memory": "21904Ki" }
+    }
+  ]
+}
+
+
+
+
